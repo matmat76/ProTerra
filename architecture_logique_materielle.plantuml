@@ -1,0 +1,128 @@
+@startuml  diagramme_deploiement
+' Configuration du style
+skinparam nodesep 100
+skinparam ranksep 100
+
+actor "Conducteur" as Conducteur
+
+'Modules du conducteur
+node "volan" as Volant
+node "levier de vitesse" as LevierVitesse
+node "Accélérateur" as Accélérateur
+node "Frein" as Frein
+
+'Controleur et actionneurs
+node "STMPilot" as STMPilot
+node "Brain" as Brain
+node "STMVision" as STMVision
+node "STMRunner" as STMRunner
+node "STMHost" as STMHost
+
+'Module de l'écran de la voiture
+node "Ecran" as Ecran
+
+'Module de la caméra de Brain
+node "Camera" as Camera
+
+'Module des capteurs de Vision
+node "LiDar" as LiDar
+node "CapteurTempérature" as CTempérature
+node "CapteurAccéléromètre" as CAccéléromètre
+node "CapteurAir" as CAir
+node "CapteurPressionPneu" as CPressionPneu
+node "CapteurLigneRoute" as CLigneRoute
+node "CapteurPluie" as CPluie
+node "CapteurLumière" as CLumière
+node "CapteurKinect" as CKinect
+node "CapteurPoids" as CPoids
+'Pour le niveau de pente
+node "CapteurUniteDeMesureInertielle" as CUniteDeMesureInertielle 
+node "CapteurGPS" as CGPS
+
+'Module de Runner
+node "Moteur" as Moteur
+node "ServoMoteurRoues" as ServoMoteurRoues
+
+'Module de Host
+node "Microphone" as Microphone
+node "HautParleur" as HautParleur
+node "Phares" as Phares
+node "LumièreInterieure" as LumièreInterieure
+node "Climatisation" as Climatisation
+node "EssuieGlace" as EssuieGlace
+
+'Communication phares
+node "ManettesPhares" as ManettesPhares
+node "ManetteEssuieGlace" as ManetteEssuieGlace
+
+
+[Pilot] ..> STMPilot : <<deploy>>
+[RaspBrain] ..> Brain : <<deploy>>
+[Vision] ..> STMVision : <<deploy>>
+[Runner] ..> STMRunner : <<deploy>>
+[Host] ..> STMHost : <<deploy>>
+
+interface "NetVision" as NetVision
+interface "NetRunner" as NetRunner
+interface "NetHost" as NetHost
+interface "NetPilot" as NetPilot
+interface "Bluetooth" as Bluetooth
+
+Conducteur -- Volant
+Conducteur -- LevierVitesse
+Conducteur -- Accélérateur
+Conducteur -- Frein
+
+Volant -- STMPilot
+LevierVitesse -- STMPilot
+Accélérateur -- STMPilot
+Frein -- STMPilot
+
+STMVision -- Camera
+Ecran -- Brain 
+Brain -- NetVision
+Brain -- NetRunner
+Brain -- NetHost
+Brain -- NetPilot
+NetPilot -- STMPilot
+NetVision -- STMVision
+
+STMVision -- LiDar
+STMVision -- CTempérature
+STMVision -- CAccéléromètre
+STMVision -- CAir
+STMVision -- CPressionPneu
+STMVision -- CLigneRoute
+STMVision -- CPluie
+STMVision -- CLumière
+STMVision -- CKinect
+STMVision -- CPoids
+STMVision -- CUniteDeMesureInertielle
+STMVision -- CGPS
+
+
+NetRunner -- STMRunner
+
+STMRunner -- Moteur
+STMRunner -- ServoMoteurRoues
+
+STMHost -- Microphone
+STMHost -- HautParleur
+STMHost -- Phares
+STMHost -- LumièreInterieure
+STMHost -- Climatisation
+STMHost -- EssuieGlace
+
+NetHost -- STMHost
+
+Conducteur -- ManetteEssuieGlace
+Conducteur -- ManettesPhares
+
+ManetteEssuieGlace -- STMPilot
+ManettesPhares -- STMPilot
+
+Conducteur -- Ecran
+Conducteur -- Bluetooth
+
+Bluetooth -- STMHost
+@enduml
