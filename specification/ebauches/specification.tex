@@ -10,13 +10,32 @@
 \usepackage{fancyhdr}
 \usepackage{tocloft}
 
+% Configuration du chemin des images
+\graphicspath{{figures/}{../figures/}}
+
 % Configuration de la page
-\geometry{margin=2.5cm}
+\geometry{margin=2cm, headheight=70pt, headsep=0pt, footskip=30pt}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{ProTerra - Spécification}
+\fancyhead[L]{
+    \includegraphics[height=60pt]{companyLogo.jpg}%
+}
+\fancyhead[C]{\textbf{ProTerra -- Spécification}}
 \fancyhead[R]{\thepage}
+\fancyfoot[C]{©2024 Droits réservés, Tremblay}
 \renewcommand{\headrulewidth}{0.4pt}
+
+% Appliquer le style fancy même aux pages spéciales
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[L]{
+        \includegraphics[height=60pt]{companyLogo.jpg}%
+    }
+    \fancyhead[C]{\textbf{ProTerra -- Spécification}}
+    \fancyhead[R]{\thepage}
+    \fancyfoot[C]{©2025 Droits réservés, Tremblay, Le Gall}
+    \renewcommand{\headrulewidth}{0.4pt}
+}
 
 % Informations du document
 \title{ProTerra\\Spécification Technique}
@@ -28,9 +47,10 @@
 \maketitle
 \newpage
 
+\vspace*{5cm} % Espace supplémentaire avant la table des matières
 \tableofcontents
 \newpage
-
+\hspace{2cm}
 \section{Introduction}
 Ce document présente la spécification technique du projet ProTerra.
 
